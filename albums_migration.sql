@@ -1,5 +1,5 @@
-USE
-codeup_test_db;
+-- Specifies the db we are using, so we don't have to input it in the cli.
+USE codeup_test_db;
 -- Write some SQL to drop a table named albums if it exists.
 DROP TABLE IF EXISTS albums;
 
