@@ -10,6 +10,14 @@ MySQL's commands are divided into several different categories:
        - Data Control Language (DCL) refers to the GRANT and REVOKE statements
        - Data Transaction Language (DTL) refers to the START TRANSACTION, SAVEPOINT, COMMIT and ROLLBACK [TO SAVEPOINT] statements
 
+<hr>
+NOTE ON COMMENTS: MySQL supports:
+
+    --
+    /* */
+    #
+<hr>
+
 ## Starting Server
 <hr>
 In a production setup the database will be setup to run automatically, but for out purposes we'll need to start and stop MySQL ourselves.
@@ -385,5 +393,4 @@ Sometimes you do not want to just remove a handful of records, but all the recor
 
     TRUNCATE table_name;
 TRUNCATE has no WHERE clause, there is no way to limit what rows of the table will be removed; it deletes EVERYTHING. If you thought DELETE was scary, TRUNCATE is <strong><em>downright terrifying</em></strong>.
-
 
