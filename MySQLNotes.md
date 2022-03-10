@@ -283,5 +283,107 @@ The < filename.sql tells the MySQL command line client to read the specified fil
 
 You can add comments in your SQL script with two dashes: --. Everything on a line after -- is a comment and will not be executed.
 
+# Statements
+<hr>
+You have one set of commands to create and manage the structure of your database, and another set to manipulate the data in your database.
+
+These queries are often called CRUD operations, meaning "Create, Read, Update, and Delete". CRUD is the basic building block for working with data in any system, whether it is a database, a web API, a cache server, etc. By and large, most of the SQL you write in the future will be CRUD commands.
+
+## Insert
+<hr>
+The commands to add new rows to a table is INSERT. Its basic structure looks like the following:
+
+    INSERT INTO table_name (field1, field2, ...)
+    VALUES ('value1', 'value2', ...);
+You do not have to specify every column in your table, but the set of values must match up exactly with the set of columns. In particular, you should almost never specify a column that has AUTO_INCREMENT like your primary key.
+
+Example:
+
+    INSERT INTO quotes (author_first_name, author_last_name, content)
+    VALUES ('Douglas', 'Adams',    'Time is an illusion. Lunchtime doubly so.'),
+    ('Mark',    'Twain',    'Clothes make the man. Naked people have little or no influence on society.'),
+    ('Kurt',    'Vonnegut', 'The universe is a big place, perhaps the biggest.');
+Notice that all our string values are enclosed in single quotes ('), this is the SQL standard. If you need to put a single quote in a string, you can escape it, (\') or you can use two single quotes in a row ('').
+
+## Select
+<hr>
+We use SELECT to find and return rows from a table. SELECT is a deceptively powerful statement.
+Syntax:
+
+    SELECT column1, column2, ... FROM table_name;
+Examples:
+  
+    SELECT author_last_name, content FROM quotes;
+    SELECT * FROM quotes;
+
+### Where Clause
+If we want to change what data is being returned, we need to narrow down our selection. We can do this by using a WHERE clause. WHERE allows you to specify a condition that must be true for a given row to be displayed. The basic syntax looks like:
+
+    SELECT column1, column2, ...
+    FROM table_name
+    WHERE column_name = 'value';
+Notice that for comparison SQL uses just a single = and not the double == we have used before. For example, if we wanted all the quotes written by 'Adams' we could do:
+
+    SELECT * FROM quotes WHERE author_last_name = 'Adams';
+Also remember, the guaranteed fastest and most precise way to find a single record in a table is to use the table's primary key:
+
+    SELECT * FROM quotes WHERE id = 5;
+
+### Operators
+<a href="https://dev.mysql.com/doc/refman/8.0/en/non-typed-operators.html">MySQL Operators</a> are similar to other languages, however there are a few new ones:
+
+    = 	Equal
+    != or <> 	Not equal
+    < 	Less than
+    > 	Greater than
+    <= 	Less than or equal to
+    >= 	Greater than or equal to
+    BETWEEN value1 AND value2 	Greater than or equal to value1 and less than or equal to value2
+
+### Miscellaneous Output
+Sometimes it may be useful to output arbitrary data from our SQL scripts. We can do this by selecting an arbitrary string and giving it a name like so:
+
+    SELECT 'I am output!' AS 'Info';
+
+## Update
+<hr>
+The command to modify existing data in a table is UPDATE. Unlike INSERT, update only works with existing records; it will <strong>not</strong> add new rows to any table.
+The basic syntax for an UPDATE statement is:
+
+    UPDATE table_name
+    SET column1 = 'value1', column2 = 'value2', ...
+    WHERE columnA = 'valueA';
+It is generally safest to use your primary key column for updates, but you can have any condition in your WHERE clause, or omit it entirely.
+** If you omit the WHERE clause in an UPDATE statement, the update will apply to all rows on that table.
+
+## Delete
+<hr>
+To remove records from a table, we use the DELETE statement. The basic syntax for delete rows:
+
+    DELETE FROM table_name WHERE column_name = 'value';
+The ids in the table will not automatically reorder. This is actually by design and helps keep our data consistent and predictable. If the values for our primary key changed regularly, we would have no reliable way to find a particular row.
+
+
+### CAUTION ON DELETE
+<hr>
+The DELETE query is exceptionally dangerous—there is no confirmation and there is no going back. It is up to you as a developer to make sure you are only deleting the records you want to. A good rule of thumb is to:
+
+    Always write your WHERE condition first.
+    Whenever possible, DELETE using the table's primary key.
+
+The safest way to write a DELETE statement is to write a SELECT statement first. Use that query to narrow down your condition and make sure you know what is about to be removed. Once you have a good SELECT it is trivial to convert it into a DELETE:
+
+    -- First:
+    SELECT * FROM quotes WHERE id = 3;
+    -- Convert to:
+    DELETE FROM quotes WHERE id = 3;
+<hr>
+
+## Truncate
+<hr>
+Sometimes you do not want to just remove a handful of records, but all the records from a table. For that, SQL also has a TRUNCATE command:
+
+    TRUNCATE table_name;
+TRUNCATE has no WHERE clause, there is no way to limit what rows of the table will be removed; it deletes EVERYTHING. If you thought DELETE was scary, TRUNCATE is <strong><em>downright terrifying</em></strong>.
 
 
