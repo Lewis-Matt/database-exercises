@@ -3,7 +3,20 @@ USE codeup_test_db;
 -- First write your queries as separate INSERT statements for each record and test. You should see no output.
 -- Refactor your script to use a single INSERT statement for all the records and test it again. Again, this should not generate any output.
 
-INSERT INTO albums (artist, name_of_album, release_date, sales, genre)
+-- As No data sources are configured to run this SQL script, have to recreate the album from albums_migration.sql
+
+CREATE TABLE IF NOT EXISTS albums
+(
+    id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    artist       VARCHAR(50),
+    name         VARCHAR(100),
+    release_date INT,
+    sales        FLOAT,
+    genre        VARCHAR(50),
+    PRIMARY KEY (id)
+);
+
+INSERT INTO albums (artist, name, release_date, sales, genre)
 VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('AC/DC', 'Back in Black', 1980, 50000000, 'hard rock'),
        ('Whitney Houston', 'The Bodyguard', 1992, 45000000, 'R&B, soul, pop'),
@@ -12,7 +25,7 @@ VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('Pink Floyd', 'The Dark Side of the Moon', 1973, 44000000, 'progressive rock'),
        ('Eagles', 'Hotel California', 1976, 42000000, 'soft rock'),
        ('Bee Gees', 'Saturday Night Fever', 1977, 40000000, 'disco'),
-       ('Fleetword Mac', 'Rumours', 1977, 40000000, 'soft rock'),
+       ('Fleetwood Mac', 'Rumours', 1977, 40000000, 'soft rock'),
        ('Shania Twain', 'Come On Over', 1997, 40000000, 'country, pop'),
        ('Various Artists', 'Grease Soundtrack', 1978, 38000000, 'rock and roll'),
        ('Led Zeppelin', 'Led Zeppelin IV', 1971, 37000000, 'hard rock, heavy metal'),
@@ -26,3 +39,4 @@ VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('Celine Dion', 'Let''s Talk About Love', 1997, 31000000, 'pop, soft rock');
 
 -- mysql -u codeup_test_user -p < albums_seeder.sql
+-- SELECT * FROM albums;
