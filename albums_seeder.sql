@@ -4,7 +4,6 @@ USE codeup_test_db;
 -- Refactor your script to use a single INSERT statement for all the records and test it again. Again, this should not generate any output.
 
 -- As No data sources are configured to run this SQL script, have to recreate the album from albums_migration.sql
-
 CREATE TABLE IF NOT EXISTS albums
 (
     id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -36,7 +35,8 @@ VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('The Beatles', 'Sgt. Pepper''s Lonely Hearts Club Band', 1967, 32000000, 'rock'),
        ('Various Artists', 'Dirty Dancing', 1987, 32000000, 'pop, rock, R&B'),
        ('Adele', '21', 2011, 31000000, 'pop, soul'),
-       ('Celine Dion', 'Let''s Talk About Love', 1997, 31000000, 'pop, soft rock');
+       ('Celine Dion', 'Let''s Talk About Love', 1997, 31000000, 'pop, soft rock'),
+       ('Nirvana', 'Nevermind', 1991, 30000000, 'grunge, alternative rock');
 
 -- mysql -u codeup_test_user -p < albums_seeder.sql
 -- SELECT * FROM albums;
