@@ -255,7 +255,7 @@ If we need to see what tables are defined in a database:
 
 ## Describing Tables
 <hr>
-he command to show the structure of a table:
+The command to show the structure of a table:
 
     DESCRIBE quotes;
 MySQL uses EXPLAIN and DESCRIBE interchangeably. By convention we use DESCRIBE when we want to inspect a table, and EXPLAIN when we want to analyze a query.
