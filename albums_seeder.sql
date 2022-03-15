@@ -3,18 +3,6 @@ USE codeup_test_db;
 -- First write your queries as separate INSERT statements for each record and test. You should see no output.
 -- Refactor your script to use a single INSERT statement for all the records and test it again. Again, this should not generate any output.
 
--- As No data sources are configured to run this SQL script, have to recreate the album from albums_migration.sql
-CREATE TABLE IF NOT EXISTS albums
-(
-    id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    artist       VARCHAR(50),
-    name         VARCHAR(100),
-    release_date INT,
-    sales        FLOAT,
-    genre        VARCHAR(50),
-    PRIMARY KEY (id)
-);
-
 INSERT INTO albums (artist, name, release_date, sales, genre)
 VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('AC/DC', 'Back in Black', 1980, 50000000, 'hard rock'),
@@ -39,4 +27,5 @@ VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('Nirvana', 'Nevermind', 1991, 30000000, 'grunge, alternative rock');
 
 -- mysql -u codeup_test_user -p < albums_seeder.sql
+-- if already in mysql client use: "source albums_seeder.sql" to run script
 -- SELECT * FROM albums;

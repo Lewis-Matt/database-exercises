@@ -22,5 +22,6 @@ CREATE TABLE albums
 );
 -- Open a terminal, and run the script as codeup_test_user with the following command:
 --     mysql -u codeup_test_user -p < albums_migration.sql
+-- if already in mysql client use: "source albums_seeder.sql" to run script
 -- After running the script, connect to the MySQL server as you have done previously.
 -- USE the codeup_test_db and use DESCRIBE and SHOW CREATE to verify that your albums table has been successfully created.

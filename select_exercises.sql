@@ -24,3 +24,5 @@ SELECT * FROM albums WHERE sales > 30000000;
 # Use 'like' instead of genre = 'rock', otherwise you will get albums that only have 'rock' as a genre (exact match).
 SELECT '' AS 'Rock albums';
 SELECT * FROM albums WHERE genre like '%rock%';
+
+-- if already in mysql client use: "source albums_seeder.sql" to run script

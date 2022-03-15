@@ -394,3 +394,8 @@ Sometimes you do not want to just remove a handful of records, but all the recor
     TRUNCATE table_name;
 TRUNCATE has no WHERE clause, there is no way to limit what rows of the table will be removed; it deletes EVERYTHING. If you thought DELETE was scary, TRUNCATE is <strong><em>downright terrifying</em></strong>.
 
+## Misc Notes
+<hr>
+
+Running sql script: If you are already in mysql client use: "source script_name.sql" to run a script
+Otherwise: mysql -u user_name -p < script_name.sql
