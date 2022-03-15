@@ -352,6 +352,8 @@ Also remember, the guaranteed fastest and most precise way to find a single reco
 Sometimes it may be useful to output arbitrary data from our SQL scripts. We can do this by selecting an arbitrary string and giving it a name like so:
 
     SELECT 'I am output!' AS 'Info';
+Does not work with * (must be individual columns)
+Does not work with WHERE.
 
 ## Update
 <hr>
