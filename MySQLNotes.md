@@ -401,3 +401,32 @@ TRUNCATE has no WHERE clause, there is no way to limit what rows of the table wi
 
 Running sql script: If you are already in mysql client use: "source script_name.sql" to run a script
 Otherwise: mysql -u user_name -p < script_name.sql
+
+## Notes for test_db Exercises
+<hr>
+
+### WHERE, LIKE, DISTINCT, BETWEEN, IN
+The WHERE clause, if given, indicates the condition or conditions that rows must satisfy to be selected. The WHERE condition is an expression that evaluates to true for each row to be selected.
+
+We can use WHERE with the LIKE option to find similarities. The % are wildcards.
+This query will select all first names with the letter combination 'sus':
+
+    SELECT DISTINCT first_name
+    FROM employees
+    WHERE first_name LIKE '%sus%';
+* Can add the DISTINCT keyword to our SELECT statement to avoid getting duplicate values.
+
+BETWEEN to find specific ranges of values:
+
+    WHERE emp_no BETWEEN 10026 AND 10082;
+We can use WHERE with IN to query only very specific sets of values. The () are required when you use IN.
+
+    WHERE last_name IN ('Herber', 'Dredge', 'Lipner', 'Baek');
+
+We can also use comparison operators, IS NULL, IS NOT NULL.
+
+We can chain using AND or OR:
+
+    WHERE emp_no < 20000
+        AND last_name IN ('Herber','Baek')
+        OR first_name = 'Shridhar';
