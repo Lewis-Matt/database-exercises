@@ -2,7 +2,7 @@ USE codeup_test_db;
 -- Use INSERT to add records from: https://en.wikipedia.org/wiki/List_of_best-selling_albums
 -- First write your queries as separate INSERT statements for each record and test. You should see no output.
 -- Refactor your script to use a single INSERT statement for all the records and test it again. Again, this should not generate any output.
-
+TRUNCATE albums;
 INSERT INTO albums (artist, name, release_date, sales, genre)
 VALUES ('Michael Jackson', 'Thriller', 1982, 70000000, 'pop, post-disco, funk'),
        ('AC/DC', 'Back in Black', 1980, 50000000, 'hard rock'),
