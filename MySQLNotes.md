@@ -441,3 +441,21 @@ The ORDER BY clause also allows you to chain together column names, column alias
     FROM employees
     ORDER BY last_name DESC, first_name ASC;
 
+### LIMIT
+The LIMIT clause limits the number of results returned to a number or range you specify.
+
+    SELECT columns FROM table LIMIT count [OFFSET count];
+The simplest use of the LIMIT clause just specifies a number after the keyword.
+
+    WHERE first_name LIKE 'M%'
+    LIMIT 10;
+Adding an OFFSET tells MySQL which row to start with.
+
+    LIMIT 25 OFFSET 50;
+LIMIT and OFFSET are commonly used for pagination, or creating pages of data.
+Try to think of your results as batches, sets, or pages. The first five results are your first page. The five after that would be your second page, etc.
+
+    ceiling(OFFSET/LIMIT) = Page
+
+https://www.xarg.org/2016/10/derivation-of-pagination-calculation/
+
