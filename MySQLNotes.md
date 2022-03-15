@@ -430,3 +430,14 @@ We can chain using AND or OR:
     WHERE emp_no < 20000
         AND last_name IN ('Herber','Baek')
         OR first_name = 'Shridhar';
+
+### ORDER BY, GROUP BY
+Columns selected for output can be referred to in ORDER BY and GROUP BY clauses using column names, column aliases, or column positions. Column positions are integers and begin with 1. ASCending or DESCending.
+
+    SELECT column FROM table ORDER BY column_name [ASC|DESC];
+The ORDER BY clause also allows you to chain together column names, column aliases, or column positions.
+
+    SELECT first_name, last_name
+    FROM employees
+    ORDER BY last_name DESC, first_name ASC;
+
