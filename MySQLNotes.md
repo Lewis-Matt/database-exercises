@@ -459,3 +459,71 @@ Try to think of your results as batches, sets, or pages. The first five results 
 
 https://www.xarg.org/2016/10/derivation-of-pagination-calculation/
 
+## Functions
+<hr>
+
+https://dev.mysql.com/doc/refman/8.0/en/functions.html
+
+### String Functions
+#### CONCAT
+The CONCAT() function takes in any number of strings or column names and will concatenate them all together.
+
+    SELECT CONCAT('Hello ', 'Codeup', '!');
+#### LIKE / NOT LIKE
+Use WHERE with the LIKE option to find similarities. The % are wildcards.
+
+    WHERE first_name NOT LIKE '%a%';
+### Date and Time
+One of the most commonly used is NOW() or its synonymous alias CURRENT_TIMESTAMP().
+#### DAY
+DAY() is a synonym for DAYOFMONTH().
+
+    SELECT DAYOFMONTH('1990-05-03');
+    -- Will return 3
+    
+    SELECT DAY('2017-03-25');
+    -- Will return 25
+#### MONTH
+Returns the month for date, in the range 1 to 12 for January to December, or 0 for dates such as '0000-00-00' or '2008-00-00' where the month has not been defined.
+
+    SELECT MONTH('2008-02-03');
+    -- Will return 2
+#### YEAR
+Returns the year for a date, in the range 1000 to 9999, or 0 for the zero date.
+
+    SELECT YEAR('1987-01-01');
+    -- Will return 1987
+
+Example trying to find employees that were born on the U.S. Independence Day during the 1950's: 
+
+    SELECT *
+    FROM employees
+    WHERE year(birth_date) BETWEEN 1950 AND 1959
+    AND month(birth_date) = 7
+    AND day(birth_date) = 4;
+#### NOW
+The NOW() function returns the current time in YYYY-MM-DD HH:MM:SS format.
+
+    SELECT NOW();
+#### CURDATE
+The CURDATE() function returns just the current date with no time information in YYYY-MM-DD format.
+
+    SELECT CURDATE();
+#### CURTIME
+The function CURTIME() returns the time formatted as HH:MM:SS.
+
+    SELECT CURTIME();
+#### UNIX_TIMESTAMP() & UNIX_TIMESTAMP(date)
+The UNIX_TIMESTAMP() function is used to represent time as an integer. It will return the number of seconds since midnight January 1st, 1970. 
+If you pass a date time value to UNIX_TIMESTAMP(), it will give you the number of seconds from the unix epoch to that date.
+
+    The Unix epoch is 00:00:00 UTC on 1 January 1970 (an arbitrary date). Unix time is nonlinear with a leap second having the same Unix time as the second before it (or after it, implementation dependent), so that every day is treated as if it contains exactly 86400 seconds,[2] with no seconds added to or subtracted from the day as a result of positive or negative leap seconds. Due to this treatment of leap seconds, Unix time is not a true representation of UTC. 
+
+    SELECT CONCAT(
+    'Teaching people to code for ',
+    UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04'),
+    ' seconds'
+    );
+
+### Numeric Functions and Operators
+https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html
