@@ -348,12 +348,37 @@ Also remember, the guaranteed fastest and most precise way to find a single reco
     >= 	Greater than or equal to
     BETWEEN value1 AND value2 	Greater than or equal to value1 and less than or equal to value2
 
-### Miscellaneous Output
+## Aliases
+<hr>
+Aliases are commonly used to make temporary names for joins, or to change the output of a column's name.
+We use the AS keyword to assign an alias to a column name or table.
+
+    SELECT CONCAT(first_name, ' ', last_name) AS full_name
+    FROM employees
+    LIMIT 25;
+A SELECT expression can be given an alias using AS alias_name. The alias is used as the expression's column name and can be used in GROUP BY, ORDER BY, or HAVING clauses.
+We can still use the original column names alongside the aliases.
+
+    SELECT CONCAT(first_name, ' ', last_name) AS full_name
+    FROM employees
+    GROUP BY full_name, last_name
+    ORDER BY last_name
+    LIMIT 25;
+We can also alias the table name.
+
+    SELECT CONCAT(first_name, ' ', last_name) AS full_name
+    FROM employees AS emp
+    GROUP BY full_name, last_name
+    ORDER BY last_name
+    LIMIT 25;
+
+It is not permissible to refer to a column alias in a WHERE clause, because the column value might not yet be determined when the WHERE clause is executed.
+Does not work with * (must be individual columns)
+
+### Misc Output
 Sometimes it may be useful to output arbitrary data from our SQL scripts. We can do this by selecting an arbitrary string and giving it a name like so:
 
     SELECT 'I am output!' AS 'Info';
-Does not work with * (must be individual columns)
-Does not work with WHERE.
 
 ## Update
 <hr>
