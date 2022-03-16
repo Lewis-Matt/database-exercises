@@ -527,3 +527,51 @@ If you pass a date time value to UNIX_TIMESTAMP(), it will give you the number o
 
 ### Numeric Functions and Operators
 https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html
+
+## GROUP BY
+<hr>
+Grouping results based on data in columns allows us to remove duplicates, much like using DISTINCT. We can also use GROUP BY in combination with aggregate functions.
+
+GROUP BY follows the same syntax as ORDER BY.
+SELECT column FROM table GROUP BY column_name;
+However, GROUP BY returns only the unique occurrences of the column specified.
+
+    SELECT last_name, first_name
+    FROM employees
+    GROUP BY last_name, first_name;
+The above query will show us all of the unique combinations of first and last names, grouped by their last name sorted alphabetically, and within each last name group, sorted by first name.
+
+    Any column(s) that appear in the SELECT should also be in the GROUP BY clause.
+
+### Aggregate Functions
+The functions we have seen so far look at data in a single column or possibly across an entire row. An aggregate function works with data across all the rows in our result.
+https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
+
+#### COUNT
+The COUNT() function will return the number of non-null expression values in a result. You will commonly see it written as COUNT(*). For example, if we wanted to see how many rows were in our employees table total, we would run:
+
+    SELECT COUNT(*) FROM employees;
+If we were only concerned about the values in a given column, we can pass that to the COUNT() function:
+
+    SELECT COUNT(first_name)
+    FROM employees
+    WHERE first_name NOT LIKE '%a%';
+This query will return a count of all first names that do not have an a in them from the employees table.
+
+#### GROUP With Aggregates
+We can combine our use of aggregate functions with the GROUP BY clause to produce more meaningful results.
+
+If we want to find out how many unique first names do not contain an 'a', we know we can use a GROUP BY, but we can also combine this with the aggregate COUNT function to find how many employees have each unique last name:
+
+    SELECT first_name, COUNT(first_name)
+    FROM employees
+    WHERE first_name NOT LIKE '%a%'
+    GROUP BY first_name;
+This will show us the 10 most common hire dates for employees:
+
+    SELECT hire_date, COUNT(*)
+    FROM employees
+    GROUP BY hire_date
+    ORDER BY COUNT(*) DESC
+    LIMIT 10;
+The COUNT() function will be the one you used most frequently, but there are many others such as SUM(), AVG(), MIN() and MAX(). There are even functions that do statistical analysis like STDDEV() and VARIANCE(). Using aggregates can save a lot of tedious looping and arithmetic on your end.
