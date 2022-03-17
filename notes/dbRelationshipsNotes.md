@@ -100,27 +100,102 @@ The following SQL creates a FOREIGN KEY on the "PersonID" column when the "Order
         CREATE TABLE roles (
         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id)                                // relationship with FK role_id in users table
         );
         
         CREATE TABLE users (
         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL,
-        role_id INT UNSIGNED DEFAULT NULL,
-        PRIMARY KEY (id),
-        FOREIGN KEY (role_id) REFERENCES roles (id)
+        role_id INT UNSIGNED DEFAULT NULL,              // allows NULL values
+        PRIMARY KEY (id),                               // users table has its own PK
+        FOREIGN KEY (role_id) REFERENCES roles (id)     // relationship with PK id of roles table
         );
         
-        INSERT INTO roles (name) VALUES ('admin');
+        INSERT INTO roles (name) VALUES ('admin');      // four roles ...
         INSERT INTO roles (name) VALUES ('author');
         INSERT INTO roles (name) VALUES ('reviewer');
         INSERT INTO roles (name) VALUES ('commenter');
         
         INSERT INTO users (name, email, role_id) VALUES
-        ('bob', 'bob@example.com', 1),
+        ('bob', 'bob@example.com', 1),                  // six users, none use 'commenter'
         ('joe', 'joe@example.com', 2),
-        ('sally', 'sally@example.com', 3),
+        ('sally', 'sally@example.com', 3),              // sally and adam share the same role
         ('adam', 'adam@example.com', 3),
-        ('jane', 'jane@example.com', null),
+        ('jane', 'jane@example.com', null),             // jane and mike do not have a role assigned
         ('mike', 'mike@example.com', null);
+
+### JOIN/INNER JOIN
+JOIN, also referred to as INNER JOIN. Here is an example of a JOIN query on the above data set:
+
+    SELECT users.name as user_name, roles.name as role_name
+    FROM users
+    JOIN roles ON users.role_id = roles.id;
+For a basic join, we can expect that we will get only the results where both the left and right tables have values for their respective keys that are mentioned in the ON part of the query. There are only four results that have a corresponding record in both the left and right tables of the join. The above returns:
+
+    +-----------+-----------+
+    | user_name | role_name |
+    +-----------+-----------+
+    | bob       | admin     |
+    | joe       | author    |
+    | sally     | reviewer  |
+    | adam      | reviewer  |
+    +-----------+-----------+
+    4 rows in set (0.00 sec)
+
+### LEFT JOIN
+A LEFT JOIN is used when you want to retrieve all the records from the left table, regardless of whether or not they have a corresponding record in the right table:
+
+    SELECT users.name AS user_name, roles.name AS role_name
+    FROM users
+    LEFT JOIN roles ON users.role_id = roles.id;
+Since we know that there are six users in the database, and users is the left table of the query, we will get all the users returned, regardless of whether or not they have a role. 
+
+### RIGHT JOIN
+A RIGHT JOIN is used when you want to retrieve all the records from the right table, regardless of whether or not they have a corresponding record in the left table. The reason that RIGHT JOIN is not used as often is because a RIGHT JOIN can be rewritten as a LEFT JOIN by changing the order of the tables in the query. 
+
+    SELECT users.name AS user_name, roles.name AS role_name
+    FROM users
+    RIGHT JOIN roles ON users.role_id = roles.id;
+Since we know that there are four roles in the database, and roles is the right table of the query, we will get all the roles returned regardless of whether or not there is a user that has that role. Here is the actual query result:
+
+    +-----------+-----------+
+    | user_name | role_name |
+    +-----------+-----------+
+    | bob       | admin     |
+    | joe       | author    |
+    | sally     | reviewer  |
+    | adam      | reviewer  |
+    | NULL      | commenter |
+    +-----------+-----------+
+    5 rows in set (0.00 sec)
+
+Rewritten as a LEFT JOIN:
+
+    SELECT users.name as user_name, roles.name as role_name
+    FROM roles
+    LEFT JOIN users ON users.role_id = roles.id;
+
+## Associative Tables and Joins
+<hr>
+Sometimes we need to use multiple joins across a table that associates two other tables with one another. In the employees database we have been using, multiple joins would be required to get an employee name along with the name of the department they work for.
+<br>
+Employees and departments are mapped through an associative table named dept_emp. The dept_emp table contains foreign keys to both the employees and departments tables. It also contains a from_date and to_date which allows for employees to be associated with different departments over time. This type of relationships is referred to as a many-to-many association. When an employee is currently active with a particular department, the to_date is set to 9999-01-01. This information will be needed for our query.
+<br>
+Let us try to find the full name and department for the employee with an employee id of 10001:
+
+    SELECT CONCAT(e.first_name, ' ', e.last_name) AS full_name, d.dept_name
+    FROM employees as e
+    JOIN dept_emp as de
+    ON de.emp_no = e.emp_no
+    JOIN departments as d
+    ON d.dept_no = de.dept_no
+    WHERE de.to_date = '9999-01-01' AND e.emp_no = 10001;
+We then join the employees table with the dept_emp table on the emp_no relationship. Next, we join the departments table on the dept_no relationship. This bridges the gap between the employee and the department they work in. Notice that we also add the where condition with the to_date and the emp_no so we only get the active department for the employee we are looking for.
+
+    +----------------+-------------+
+    | full_name      | dept_name   |
+    +----------------+-------------+
+    | Georgi Facello | Development |
+    +----------------+-------------+
+
