@@ -8,3 +8,5 @@ USE employees;
 # Find the current salary of all current managers.
 
 # Find the names of all current employees, their department name, and their current manager's name .
+
+
