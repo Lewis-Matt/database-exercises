@@ -199,3 +199,6 @@ We then join the employees table with the dept_emp table on the emp_no relations
     | Georgi Facello | Development |
     +----------------+-------------+
 
+#### See join_test_db_creation.sql for good examples of I/L/R JOINs
+
+
