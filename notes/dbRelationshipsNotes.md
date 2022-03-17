@@ -56,4 +56,71 @@ This creates a new table named authors, and the unique key constraint is on the 
 
 ## JOINS
 <hr>
+MySQL allows us to JOIN tables, usually based on a foreign key relationship. The process of joining will allow us to obtain query results from more than one table in a single query. There are different types of joins, and those different types give us a lot of flexibility in the actual query results.
+The syntax for joining tables is simply using JOIN to describe the table that will be joining the query, and ON to describe the relationship.
 
+    SELECT columns
+    FROM table_a as A
+    JOIN table_b as B ON A.id = B.fk_id;
+Notice that tables can be aliased by using table_name as alias. The records from table_a and table_b will be joined based on the relationship provided between the column id in table_a and the column fk_id in table_b.
+
+It is also helpful to know that the first table mentioned, table_a in the above example, is referred to as the left table of the join. The joined/second table mentioned, table_b in the above example, is referred to as the right table of the join.
+
+#### PERSON TABLE
+PersonID 	LastName 	FirstName 	Age
+1 	            Hansen 	    Ola 	30
+2 	            Svendson 	Tove 	23
+3 	            Pettersen 	Kari 	20
+
+#### ORDER TABLE
+OrderID 	OrderNumber 	PersonID
+1 	            77895 	        3
+2 	            44678 	        3
+3 	            22456 	        2
+4 	            24562 	        1
+
+Notice that the "PersonID" column in the "Orders" table points to the "PersonID" column in the "Persons" table.
+
+    The "PersonID" column in the "Persons" table is the PRIMARY KEY in the "Persons" table.
+    The "PersonID" column in the "Orders" table is a FOREIGN KEY in the "Orders" table.
+
+The FOREIGN KEY constraint prevents invalid data from being inserted into the foreign key column, because it has to be one of the values contained in the parent table.
+The following SQL creates a FOREIGN KEY on the "PersonID" column when the "Orders" table is created:
+
+    CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+    ); 
+<hr>
+
+#### Example DB for JOINS
+        CREATE TABLE roles (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        PRIMARY KEY (id)
+        );
+        
+        CREATE TABLE users (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        role_id INT UNSIGNED DEFAULT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (role_id) REFERENCES roles (id)
+        );
+        
+        INSERT INTO roles (name) VALUES ('admin');
+        INSERT INTO roles (name) VALUES ('author');
+        INSERT INTO roles (name) VALUES ('reviewer');
+        INSERT INTO roles (name) VALUES ('commenter');
+        
+        INSERT INTO users (name, email, role_id) VALUES
+        ('bob', 'bob@example.com', 1),
+        ('joe', 'joe@example.com', 2),
+        ('sally', 'sally@example.com', 3),
+        ('adam', 'adam@example.com', 3),
+        ('jane', 'jane@example.com', null),
+        ('mike', 'mike@example.com', null);
