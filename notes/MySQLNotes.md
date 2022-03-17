@@ -634,5 +634,6 @@ The following example uses a subquery to get the primary key for the roles table
     UPDATE users
         SET role_id = (SELECT id FROM roles WHERE name = 'admin')
         WHERE email = 'fer@codeup.com';
-
-
+<hr>
+SQL beginners often use subqueries when the same results can be achieved with JOINs. While subqueries may be easier to understand and use for many SQL users, JOINs are often more efficient and faster. JOINs are also easier to read as the queries become more complex.
+<hr>
