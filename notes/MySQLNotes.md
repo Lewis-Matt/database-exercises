@@ -600,3 +600,39 @@ This will show us the 10 most common hire dates for employees:
     ORDER BY COUNT(*) DESC
     LIMIT 10;
 The COUNT() function will be the one you used most frequently, but there are many others such as SUM(), AVG(), MIN() and MAX(). There are even functions that do statistical analysis like STDDEV() and VARIANCE(). Using aggregates can save a lot of tedious looping and arithmetic on your end.
+
+## Sub-queries
+<hr>
+Subqueries, also called nested queries, refers to having more than one query expression in a query.
+Subqueries are helpful when we want to find if a value is within a subset of acceptable values.
+
+    SELECT column_a, column_b, column_c
+    FROM table_a
+    WHERE column_a IN (
+      SELECT column_a
+      FROM table_b
+      WHERE column_b = true
+    );
+
+From our employees database, we can use this example query to find all the department managers names and birthdates:
+
+    SELECT first_name, last_name, birth_date
+    FROM employees
+    WHERE emp_no IN (
+      SELECT emp_no
+      FROM dept_manager
+      )
+    LIMIT 10;
+Subqueries can be also useful while you are building INSERT / UPDATE statements where you don't know exactly what ID needs to be inserted as a foreign key as the following example demonstrates:
+
+    INSERT INTO users (name, email, role_id)
+      VALUES('fer', 'fer@codeup.com',
+        (SELECT id FROM roles WHERE name = 'commenter')
+    );
+The following example uses a subquery to get the primary key for the roles table by only knowing the name of the role and just modifies a specific user by their email. 
+
+    UPDATE users
+        SET role_id = (SELECT id FROM roles WHERE name = 'admin')
+        WHERE email = 'fer@codeup.com';
+
+
