@@ -53,7 +53,7 @@ ORDER BY departments.dept_name;
 SELECT CONCAT(e.first_name, ' ', e.last_name) AS 'Employee',
 departments.dept_name AS 'Department',
        CONCAT(employees.first_name, ' ', employees.last_name) AS 'Manager'
-# Had to make an alias here as employees is also used in JOIN below, thus throwing an error
+# Had to make an alias here as employees table (from below JOIN) has the same name as the db referenced here, thus throwing an error as it doesn't know which 'employees' is being referred to
 FROM employees AS e
         JOIN dept_emp ON e.emp_no = dept_emp.emp_no
         JOIN departments ON departments.dept_no = dept_emp.dept_no
