@@ -200,5 +200,199 @@ We then join the employees table with the dept_emp table on the emp_no relations
     +----------------+-------------+
 
 #### See join_test_db_creation.sql for good examples of I/L/R JOINs
+<hr>
 
+# DATABASE DESIGN
+<hr>
+One of the main goals when designing a database should be to avoid duplicated data, a concept known as normalization. We'll take a look at two common cases: a one-to-many relationship and a many-to-many relationship.
 
+## One-to-Many
+<hr>
+Our quotes table from before has some duplication; the author is repeated quite frequently. Using what we know now about foreign keys, we can split this database into multiple tables.
+
+Here is the current structure of our quotes table:
+
+    id 	first_name 	last_name 	content
+    1 	Douglas 	Adams 	    I love deadlines. I love the whooshing noise they make as they go by.
+    2 	Douglas 	Adams 	    Don't Panic.
+    3 	Douglas 	Adams 	    Time is an illusion. Lunchtime doubly so.
+    4 	Mark 	    Twain 	    Clothes make the man. Naked people have little or no influence on society.
+    5 	Kurt 	    Vonnegut 	The universe is a big place, perhaps the biggest.
+To remove the duplication of author information, we can define a separate authors table and insert the author data there.
+
+    CREATE TABLE authors (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        first_name VARCHAR(50),
+        last_name  VARCHAR(100) NOT NULL,
+        PRIMARY KEY (id)
+    );
+    
+    INSERT INTO authors(first_name, last_name) VALUES
+        ('Douglas', 'Adams'),
+        ('Mark', 'Twain'),
+        ('Kurt', 'Vonnegut');
+We should consider the nature of the relationship between authors and quotes. For our data:
+
+    An author can have many quotes
+    A quote belongs to an author
+Here we would say the nature of the relationship between authors and quotes is ONE-TO-MANY (one author has many quotes), and we should define a foreign key on the quotes table that references a row on the authors table.
+
+    It would not make sense to add a foreign key that references the quotes table to the authors table, as we would need a separate entry for each quote, and we do not want to duplicate author data.
+It is a common convention to name foreign key columns with the name of the table you are relating to, followed by _id:
+
+CREATE TABLE quotes (
+id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+content TEXT NOT NULL,
+author_id INT UNSIGNED NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (author_id) REFERENCES authors (id)
+);
+
+// Seeds
+
+    INSERT INTO quotes (author_id, content)
+    VALUES ((select id from authors where first_name = 'Douglas' and last_name = 'Adams'),
+        'I love deadlines. I love the whooshing noise they make as they go by.');
+    ...
+    INSERT INTO quotes (author_id, content)
+    VALUES ((select id from authors where first_name = 'Douglas' and last_name = 'Adams'),
+        'Don''t Panic.');
+This will give us the following normalized database structure:
+
+    authors
+    id 	first_name 	last_name
+    1 	Douglas 	Adams
+    2 	Mark 	    Twain
+    3 	Kurt 	    Vonnegut
+    
+    quotes
+    id 	author_id 	                    content
+    1 	    1 	            I love deadlines. I love the whooshing noise they make as they go by.
+    2 	    1 	            Don't Panic.
+    3 	    1 	            Time is an illusion. Lunchtime doubly so.
+    4 	    2 	            Clothes make the man. Naked people have little or no influence on society.
+    5 	    3 	            The universe is a big place, perhaps the biggest.
+
+## Many-to-Many
+Let's add some more information to our database. Suppose we want to categorize our quotes by the topic they relate to. We'll start by creating a topics table and putting some data into it.
+
+    CREATE TABLE topics (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        name VARCHAR(255),
+        PRIMARY KEY (id)
+    );
+    
+    INSERT INTO topics(name) VALUES
+        ('Space and Time'),
+        ('Humor'),
+        ('Office Life'),
+        ('Hitchiker''s Guide to the Galaxy');
+This will produce the following table:
+
+    topics
+    id 	name
+    1 	Space and Time
+    2 	Humor
+    3 	Office Life
+    4 	Hitchhiker's Guide to the Galaxy
+Now we want to relate our topics to our quotes. Let's consider the nature of the relationship between quotes and topics:
+
+    A quote can be related to zero or more topics
+    A topic can have many (or none) quotes
+
+We would describe the nature of this relationship as MANY-TO-MANY. A quote has many topics, and a topic can have many quotes. In this scenario, we need to define a separate table, called a join table, to relate the two together.
+
+    In a many-to-many relationship you should NOT have foreign keys on either individual table, rather, you will need a separate table to relate the two.
+It is a common convention to name join tables after the singular version of the two tables we are relating:
+
+    CREATE TABLE quote_topic (
+        quote_id INTEGER UNSIGNED NOT NULL,
+        topic_id INTEGER UNSIGNED NOT NULL,
+        FOREIGN KEY (quote_id) REFERENCES quotes(id),
+        FOREIGN KEY (topic_id) REFERENCES topics(id)
+    );
+For every individual relationship we have between a topic and a quote, we will have an entry in this table.
+
+    INSERT INTO quote_topic(quote_id, topic_id)
+        VALUES (1, 2), (1, 3), (2, 4), (3, 1),
+        (3, 2), (3, 3), (3, 4), (4, 2), (5, 1);
+Giving us this final structure:
+
+    quotes
+    id 	author_id 	content
+    1 	    1 	    I love deadlines. I love the whooshing noise they make as they go by.
+    2 	    1 	    Don't Panic.
+    3 	    1 	    Time is an illusion. Lunchtime doubly so.
+    4 	    2 	    Clothes make the man. Naked people have little or no influence on society.
+    5 	    3 	    The universe is a big place, perhaps the biggest.
+    
+    topics
+    id 	name
+    1 	Space and Time
+    2 	Humor
+    3 	Office Life
+    4 	Hitchhiker's Guide to the Galaxy
+    
+    quote_topic
+    quote_id 	topic_id
+        1 	        2
+        1 	        3
+        2 	        4
+        3 	        1
+        3 	        2
+        3 	        3
+        3 	        4
+        4 	        2
+        5 	        1
+![](/Users/misterlewis/IdeaProjects/database-exercises/quotes-db-diagram.png)
+
+<hr>
+
+### Another example of Many-to-Many:
+    attendees
+    id 	name
+    1 	Alan
+    2 	Grace
+    3 	Ada
+    4 	Bjarne
+    
+    presentations
+    id 	name 	                        location 	        presentation_time
+    1 	Test-Driven Development 101 	Conference Room A 	    9
+    2 	Intro to Management: .... 	    Conference Room B 	    9
+    3 	Java Design Patterns: ... 	    Conference Room A 	    10:30
+    4 	Development Methodologies: .... Conference Room A 	    10:30
+To relate attendees and events, we'll say:
+
+    attendees can attend one or more events
+    presentations have zero or more attendees
+
+Again, we have a MANY-TO-MANY relationship because an attendee can attend many different presentations, and a presentation can have many different attendees; neither is mutually exclusive.
+
+Let's say:
+
+    Alan (1) is going to the TDD talk (1), and the design patterns talk (3)
+    Grace is going to the management and development methodologies talks
+    Ada is going to the management and design patterns talk
+    Bjarne is just going to the development methodologies talk
+
+Our join table would look like this:
+
+    attendee_presentation
+    attendee_id 	presentation_id
+        1 	                1
+        1 	                3
+        2 	                2
+        2 	                4
+        3 	                2
+        3 	                3
+        4 	                4
+
+![](/Users/misterlewis/IdeaProjects/database-exercises/events-db-diagram.png)
+
+<br>
+
+## Common Mistakes
+
+- Having a column on a table whose contents are a string of comma-separated values. These should probably be separate rows in a separate table (or an enum).
+- Column names that have numbers at the end. Usually this means you should be putting that data on a separate table.
