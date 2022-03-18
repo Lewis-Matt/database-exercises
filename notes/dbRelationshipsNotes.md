@@ -344,7 +344,7 @@ Giving us this final structure:
         3 	        4
         4 	        2
         5 	        1
-![](/Users/misterlewis/IdeaProjects/database-exercises/quotes-db-diagram.png)
+![](../quotes-db-diagram.png)
 
 <hr>
 
@@ -388,7 +388,7 @@ Our join table would look like this:
         3 	                3
         4 	                4
 
-![](/Users/misterlewis/IdeaProjects/database-exercises/events-db-diagram.png)
+![](../events-db-diagram.png)
 
 <br>
 
