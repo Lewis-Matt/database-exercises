@@ -1,6 +1,10 @@
 # Java Server Pages (JSP)
 JSP allows us to create HTML pages with dynamic content by letting us mix Java code into our HTML. 
 Using JSPs is much easier than writing HTML inside of strings inside of servlets.
+A JSP page is a text document that contains two types of text: static data, which can be expressed in any text-based format (such as HTML, SVG, WML, and XML), and JSP elements, which construct dynamic content.
+<br>
+The page can be composed of a top file that includes other files that contain either a complete JSP page or a fragment of a JSP page. The recommended extension for the source file of a fragment of a JSP page is jspf.
+<br>
 
 While our servlets reside in src/main/java, we'll create our JSPs inside of src/main/webapp, as they are not Java source code.
 Example:
@@ -24,7 +28,7 @@ Example:
     
     </body>
     </html>
-Notice that this code contains HTML and tag-like elements that start with <% and end with %>. These are used to define the dynamic parts of the page. When the JSP file is processed, everything inside of the <% %> tags are evaulated, and a purely HTML response is produced. The code sample above might produce a response that looks like this:
+Notice that this code contains HTML and tag-like elements that start with <% and end with %>. These are used to define the dynamic parts of the page. When the JSP file is processed, everything inside of the <% %> tags are evaluated, and a pure HTML response is produced. The code sample above might produce a response that looks like this:
 
     <html>
     <head>
@@ -48,9 +52,9 @@ Notice that this code contains HTML and tag-like elements that start with <% and
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 Directives allow us to set conditions that apply to the entire JSP file. The example above is a page directive, and is used to specify the content type of this page. Most JSP files you create will include this directive.
 
-    A taglib directive can be used to import custom tags. We'll talk about this more when we discuss JSTL.
+    A taglib directive <%@taglib ... %> can be used to import custom tags. See notes on JSTL.
     Include directives can be used to include other files or JSPs. This is primarily used for templating. We'll take a look at this in more detail in the next section.
-    The page import directive can be used to import classes and libraries, the same way we might use an import statement in our Java code.
+    The page import directive <%@page ... %> can be used to import classes and libraries, the same way we might use an import statement in our Java code.
 
 ### Defining and using instance variables
 Code inside of <%! %> will be treated as an instance variable definition.
@@ -70,12 +74,12 @@ Evaluate an expression and print the result:
 Code inside of <%-- --%> is treated as a comment and will not be rendered.
 
 ## Includes
-We can use the include directive to combine files together, or to include one file inside another. This can be very useful for partial elements of your site that should be the same on every page, such as a navbar or footer. Imagine we have a directory named partials, and, inside this directory, a file named navbar.jsp with the following contents:
+We can use the Include directive to combine files together, or to include one file inside another. This can be very useful for partial elements of your site that should be the same on every page, such as a navbar or footer. Imagine we have a directory named partials, and, inside this directory, a file named navbar.jsp with the following contents:
 
     <nav>
         This is My Navbar
     </nav>
-Instead of copy/pasting the navbar onto every page in our site, which is error-prone and difficult to update, we can use the include directive on the page that needs the navbar:
+Instead of copy/pasting the navbar onto every page in our site, which is error-prone and difficult to update, we can use the Include directive on the page that needs the navbar:
 
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <!doctype html>
@@ -90,7 +94,7 @@ Instead of copy/pasting the navbar onto every page in our site, which is error-p
     </html>
 Notice that we do not include the page contentType directive in the navbar.jsp file.
 
-When the file is processed, the end user will see the two files combined together like so:
+When the file is processed, the end user will see the two files combined like so:
 
     <!doctype html>
     <html>
@@ -139,8 +143,12 @@ Example of using the implicit request object (Notice that we don't ever define r
     </html>
 
 ## Expression Language
+<hr>
 The EL makes it easy to access attributes from the request object, and gives us a convenient way of accessing properties on objects. Handling null values is easier as well, if a value is null or a reference is not defined, nothing will be output, as opposed to an exception being raised.
-
+<br>
+JSP expression language expressions (${ }) retrieve the value of object properties. The values are used to set custom tag attribute values and create dynamic content. All expressions using the ${} syntax are evaluated immediately. These expressions can appear as part of a template (static) text or as the value of a tag attribute that can accept runtime expressions. Expressions whose evaluation can be deferred use the #{} delimiters.
+https://javaee.github.io/tutorial/jsf-el003.html
+<br>
 There are also more implicit objects available to us:
 
     - param: get request parameter
@@ -161,11 +169,13 @@ When not referring to an implicit object, the expression language assumes you ar
     ...
     <h1>Here is the message: ${message}</h1>
 We have to use request.setAttribute to make a value available to the EL. Cannot do <% String message = "Hello, World"; %>
+https://javaee.github.io/tutorial/jsf-el001.html
 
 ## JSP Standard Tag Library (JSTL)
+<hr>
 Pre-defined tags that provides functionality for many common programming tasks. Also had the ability to create custom tags
 
-1. Include the the required dependency in our pom.xml file:
+1. Include the required dependency in our pom.xml file:
 
 
     <dependency>
@@ -179,7 +189,7 @@ Pre-defined tags that provides functionality for many common programming tasks. 
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-We have a variable named cart in scope and cart is an object that represents a user's shopping cart. It has a method named isEmpty that returns whether or not the cart is empty, and a private property (along with a getter and setter for) named items that is a list of objects that represent an item the user has added to the shopping cart. Each item object has several private properties and getters and setters for each property:
+We have a variable named cart in scope and cart is an object that represents a user's shopping cart. It has a method named isEmpty that returns whether the cart is empty, and a private property (along with a getter and setter for) named items that is a list of objects that represent an item the user has added to the shopping cart. Each item object has several private properties and getters and setters for each property:
 
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -237,16 +247,16 @@ Syntax:
             <p>none of the above tests were true</p>
         </c:otherwise>
     </c:choose>
-Inside of the c:when tags, the test attribute should be a boolean expression that determines whether the content inside of the tag should be rendered. Like an if-else, if one expression evaluates to true, the content inside of that tag will be rendered, and if none of the conditions are true, the content inside of the c:otherwise tag will be rendered.
+Inside the c:when tags, the test attribute should be a boolean expression that determines whether the content inside the tag should be rendered. Like an if-else, if one expression evaluates to true, the content inside that tag will be rendered, and if none of the conditions are true, the content inside the c:otherwise tag will be rendered.
 
 In the shopping cart example, we use this to either display a message that tells the user their shopping cart is empty, or display the contents of their cart.
 
 ### For Each
-The c:forEach tag allows us to loop through most types of collections. The content inside of the tag will be rendered for every item in the collection.
+The c:forEach tag allows us to loop through most types of collections. The content inside the tag will be rendered for every item in the collection.
 Syntax:
 
     <c:forEach items="${collection}" var="element"></c:forEach>
-We use the items attribute to specify the variable that contains the collection we are iterating over. The var attribute's value defines a variable that we can use inside of the tag to refer to each item in the collection.
+We use the items attribute to specify the variable that contains the collection we are iterating over. The var attribute's value defines a variable that we can use inside the tag to refer to each item in the collection.
 Example:
 
     <% request.setAttribute("numbers", new int[]{1, 2, 3, 4, 5, 6, 7}); %>
@@ -269,5 +279,13 @@ c:if tag must provide a test attribute where the content evaluates to a boolean 
 In the shopping cart example, we use the c:if tag to display a special message if an item is on sale.
 
 https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html
+
+### Misc tag notes
+    - Custom tags can be used to set a variable (c:set), iterate over a collection of locale names (c:forEach), and conditionally insert HTML text into the response (c:if, c:choose, c:when, c:otherwise).
+    
+    - jsp:setProperty is another standard element that sets the value of an object property.
+
+    - A function (f:equals) tests the equality of an attribute and the current item of a collection. (A built-in == operator is usually used to test equality.)
+
 
 
