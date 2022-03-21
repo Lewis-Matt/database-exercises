@@ -73,47 +73,63 @@ Evaluate an expression and print the result:
 ### Comments
 Code inside of <%-- --%> is treated as a comment and will not be rendered.
 
-## Includes
-We can use the Include directive to combine files together, or to include one file inside another. This can be very useful for partial elements of your site that should be the same on every page, such as a navbar or footer. Imagine we have a directory named partials, and, inside this directory, a file named navbar.jsp with the following contents:
+## Partials
+A partial is a page with a piece of HTML or other code that can be included into other pages. Best examples are header and footer files that are being included into all pages of the website. You may also have complicated logic that you would like to separate or some repetitive code.
 
-    <nav>
-        This is My Navbar
-    </nav>
-Instead of copy/pasting the navbar onto every page in our site, which is error-prone and difficult to update, we can use the Include directive on the page that needs the navbar:
+JSP doesn’t offer partials as a part of the language, but you can use include tag or directive for this purpose.
 
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <!doctype html>
-    <html>
+There are two different includes available in JSP, static and dynamic.
+
+https://studiofreya.com/2017/05/14/jsp-partials-how-to-include-files/
+### Static
+Static include uses a JSP directive include meaning they start with an alpha-sign “@”:
+
+    <%@ include file="header.html" %>
+Static include is resolved at compile time. If you want to pass parameters from another request they may not be available yet as they will be first known at execution time.
+
+Static includes are faster as the code is inserted at translation time once and for all.
+header.jsp
+
     <head>
-        <title>Include Example</title>
+        <title>My title</title>
     </head>
-    <body>
-        <%@ include file="partials/navbar.jsp" %>
-        <h1>Welcome To The Site!</h1>
-    </body>
-    </html>
-Notice that we do not include the page contentType directive in the navbar.jsp file.
 
-When the file is processed, the end user will see the two files combined like so:
+main.jsp
 
-    <!doctype html>
-    <html>
-    <head>
-        <title>Include Example</title>
-    </head>
-    <body>
-        <nav>
-            This is My Navbar
-        </nav>
-        <h1>Welcome To The Site!</h1>
-    </body>
+    <!DOCTYPE html>
+    <html lang="en">
+        <%@ include page="header.jsp" %>
+        <body>
+             ...
+        </body>
     </html>
 
-There is an alternative XML Syntax for this directive as well. It looks like this:
+### Dynamic Partials
+Dynamic includes are resolved at runtime and you can use them to pass parameters from other requests to your partial pages.
 
-    <jsp:include page="partials/navbar.jsp"></jsp:include>
-    --- OR ---
-    <jsp:include page="partials/navbar.jsp" />
+In order to make the partial JSP dynamic we will use the jsp:include tag and pass some parameters with jsp:param tag.
+header.jsp
+
+    <head>
+        <title><%= request.getParameter("title") %></title>
+    </head>
+footer.html
+    
+    <footer>
+        My footer
+    </footer>
+main.jsp
+
+    <!DOCTYPE html>
+    <html lang="en">
+        <jsp:include page="header.jsp">
+           <jsp:param name="title" value="Main title" />
+        </jsp:include>
+        <body>
+             ...
+        </body>
+        <%@ include page="footer.html" %>
+    </html>
 
 ## Implicit Objects
 Objects/variables that have already been defined:
