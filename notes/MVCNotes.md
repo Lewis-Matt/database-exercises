@@ -79,3 +79,57 @@ https://www.tutorialspoint.com/jsp/jsp_form_processing.htm
 #### See Adlister Branch Notes:
 - servlets-with-jsps: pickcolor
 - servlets-with-jsps: guess -> doGet vs doPost, redirects, getParameter, setAttribute
+
+## JavaBeans
+<hr>
+The M in MVC says that the data an application handles and its representation should also be a separate concern. We will use beans to represent the entities in our application. 
+
+    An entity is a singular, identifiable object within the problem space our application is operating in. 
+Usually each entity is represented by a database table. If we were building a web application that interacted with the employees database we explored in the previous module, we might have the following entities:
+
+    Department
+    Employee
+    Manager
+    Salary
+    Title
+As each one of the above is a discrete object. Notice that tables like dept_emp or dept_manager are not in the above list. While they are necessary to relate two entities together, they are not themselves entities, as they exist just to relate two entities together.
+<hr>
+In order to represent entities in our Java code, we will use beans. A JavaBean, or bean, is a Java class that:
+
+1. provides a zero-argument constructor
+2. has getters and setters for all instance variables
+3. implements the Serializable or Externalizable interface
+<hr>
+You can think of a bean as a Java class that just represents data, meaning the class doesn't perform any complex logic or control flow, rather, it just serves as a way to group properties. Many Java libraries are built around beans, meaning we can leverage many existing libraries by writing our classes as beans. We will write any model classes (classes that represent our entities, which represent information from the database) as beans.
+
+Each model class corresponds to the structure of the underlying database table, and instances of the class represent rows from the underlying database table.
+
+Recall the structure of the employees table from our sample database:
+
+    Field      | Type
+    -----------|---------------
+    emp_no     | int(11)
+    birth_date | date
+    first_name  | varchar(14)
+    last_name  | varchar(16)
+    gender     | enum('M','F')
+    hire_date  | date
+
+Here is an example of what a model for the Employee entity might look like:
+
+    public class Employee implements Serializable {
+        private long empNo;
+        private String firstName;
+        private String lastName;
+        private char gender;
+        private Date birthDate;
+        private Date hireDate;
+    
+        public Employee() {  }
+
+    // getters and setters
+    }
+Notice that the properties in this class match up with the columns of the employees table in the database. Java and MySQL don't have the exact same data types, but we can still provide accurate information about the type of each property in Java.
+<hr>
+NOTE: In our models, we follow Java naming conventions for our class fields, not the snake_case convection that we follow with database tables. This means property names should be camelCase; for example, emp_no becomes empNo, and first_name becomes firstName, and so on.
+<hr>
