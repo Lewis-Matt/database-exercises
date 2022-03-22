@@ -16,7 +16,9 @@ Apache Tomcat as our servlet container. Tomcat is the piece of software that han
 
 Tomcat expects our application to be deployed as a WAR (Web ARchive). This is a JAR file with additional structure.
 
-    It is important to keep in mind that the .war file that is created from our project will have a different structure from the project itself. While it's important to understand what a war file is and how it is structured, most of the time we won't be interacting with the war file directly, as it is an artifact, a byproduct of our source code, but not the source code itself.
+    It is important to keep in mind that the .war file that is created from our project will have a different structure from the project itself. 
+    While it's important to understand what a war file is and how it is structured, most of the time we won't be interacting with the war file directly, 
+    as it is an artifact, a byproduct of our source code, but not the source code itself.
 
 This is what our project structure will look like, and this is an example of a typical Maven project structure, although you might encounter slightly different conventions elsewhere:
 
@@ -62,10 +64,12 @@ Below the annotation, we have our class definition. The class must extend HttpSe
 
 Inside of our class we implement a doGet method. Notice that this method contains the Override annotation, meaning it is overriding the definition from a parent class. The methods we choose to implement in our servlet define what HTTP verbs the servlet will handle. 
 
-    Most commonly, this will be either GET (doGet) or POST(doPost). Regardless of the HTTP verb, the method will define two parameters representing the incoming request (HttpServletRequest) and the response (HttpServletResponse).
+    Most commonly, this will be either GET (doGet) or POST(doPost). Regardless of the HTTP verb, the method will define two parameters representing 
+    the incoming request (HttpServletRequest) and the response (HttpServletResponse).
 In the body of the doGet method, we set the content type of the request, get a reference to a PrintWriter object, and use that object to send some HTML as a response. You can think of this PrintWriter object like System.out.println, but for printing to the response that we send to the browser, as opposed to the console.
 
-    We'll map each servlet we create to a URL, meaning that each unique URL in our application will have a servlet associated with it, and to add a new URL, we would need to create a new servlet.
+    We'll map each servlet we create to a URL, meaning that each unique URL in our application will have a servlet associated with it, 
+    and to add a new URL, we would need to create a new servlet.
 
 ### Request Parameters
 https://www.oreilly.com/library/view/java-servlet-programming/156592391X/ch04s04.html
@@ -79,7 +83,8 @@ Fortunately, even though a servlet can receive parameters in a number of differe
 getParameter() returns the value of the named parameter as a String or null if the parameter was not specified.
 If there’s any chance a parameter could have more than one value, you should use the getParameterValues() method instead. This method returns all the values of the named parameter as an array of String objects or null if the parameter was not specified. A single value is returned in an array of length 1.
 
-    WARNING: if the parameter information came in as encoded POST data, it may not be available if the POST data has already been read manually using the getReader() or getInputStream() method of ServletRequest (because POST data can be read only once).
+    WARNING: if the parameter information came in as encoded POST data, it may not be available if the POST data has already been read manually 
+    using the getReader() or getInputStream() method of ServletRequest (because POST data can be read only once).
 
 ## Servlet Life Cycle
 <hr>
@@ -151,3 +156,4 @@ In order to use servlets we'll need both of the following:
     a web server with a web container configured to interact with our servlet classes
 
 We will use Maven to add the servlet library dependencies in our pom.xml, IntelliJ to compile and package our application as a WAR, and Tomcat to serve our application.
+

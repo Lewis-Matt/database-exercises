@@ -63,3 +63,16 @@ This gives us an end result of:
 This method allows us to pass the flow of control from our servlet to a JSP. The string that is passed to the method should be the path to the JSP file relative to the webapp directory.
 
 This line is usually the last line in a doGet or doPost method. Any logic or attribute setting is performed before this method is called.
+
+
+#### Processing forms
+https://www.tutorialspoint.com/jsp/jsp_form_processing.htm
+
+1. getParameter() − You call request.getParameter() method to get the value of a form parameter. Usually tied to the 'name' attribute of the form.
+2. getParameterValues() − Call this method if the parameter appears more than once and returns multiple values, for example checkbox.
+3. getParameterNames() − Call this method if you want a complete list of all parameters in the current request.
+4. getInputStream() − Call this method to read binary data stream coming from the client.
+
+
+#### See Adlister Branch Notes:
+- servlets-with-jsps: pickcolor
