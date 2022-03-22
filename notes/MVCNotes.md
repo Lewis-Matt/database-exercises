@@ -48,7 +48,7 @@ This allows us to make a value available in the JSP. The first argument to the m
 
     request.setAttribute("theNumber", 42);
 
-In our JSP we would be able to reference a variable named theNumber and we could write:
+In our JSP we would be able to reference a variable named theNumber, and we could write:
 
     <h1>The number is ${theNumber}.</h1>
 
