@@ -56,6 +56,8 @@ This gives us an end result of:
 
     <h1>The number is 42.</h1>
 
+- See GuessServlet or PickColorServlet in Adlister
+
 #### getRequestDispatcher
 
     request.getRequestDispatcher("/path/to/file.jsp").forward(request, response);
@@ -76,3 +78,4 @@ https://www.tutorialspoint.com/jsp/jsp_form_processing.htm
 
 #### See Adlister Branch Notes:
 - servlets-with-jsps: pickcolor
+- servlets-with-jsps: guess -> doGet vs doPost, redirects, getParameter, setAttribute
