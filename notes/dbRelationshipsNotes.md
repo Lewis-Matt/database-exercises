@@ -442,9 +442,8 @@ A way to visually describe the schema of a database and the relationships betwee
        username
        phone_numbers
                                                
-     1 | bob123| 2105554545, 2105556767, 2105553232 <--- AVOID THIS!
+     1 | bob123| 2105554545, 2105556767, 2105553232 <--- AVOID THIS! Multiple values in one cell is not good
    ```
-
 
 3. All columns within a single row should be independent from one another (if not, another table may be needed).
 
@@ -491,12 +490,10 @@ A way to visually describe the schema of a database and the relationships betwee
 
 ## Helpful Links
 
-##### Additional Info
-
 - ERDs Explained: [https://www.lucidchart.com/pages/er-diagrams](https://www.lucidchart.com/pages/er-diagrams)
 - Guide to Crow's Foot notation: [https://www.vertabelo.com/blog/crow-s-foot-notation/](https://www.vertabelo.com/blog/crow-s-foot-notation/)
 
-##### ERD Creation Apps
+## ERD Creation Apps
 
 - [draw.io](https://google.com)
 - [lucidchart](https://www.lucidchart.com)
