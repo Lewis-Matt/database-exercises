@@ -134,3 +134,4 @@ Notice that the properties in this class match up with the columns of the employ
 <hr>
 NOTE: In our models, we follow Java naming conventions for our class fields, not the snake_case convection that we follow with database tables. This means property names should be camelCase; for example, emp_no becomes empNo, and first_name becomes firstName, and so on.
 <hr>
+
