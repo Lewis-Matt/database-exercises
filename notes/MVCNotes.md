@@ -142,3 +142,39 @@ Notice that the properties in this class match up with the columns of the employ
 NOTE: In our models, we follow Java naming conventions for our class fields, not the snake_case convection that we follow with database tables. This means property names should be camelCase; for example, emp_no becomes empNo, and first_name becomes firstName, and so on.
 <hr>
 
+## Database Access Object (DAO)
+<hr>
+A common pattern in Java is to create a class to handle our interactions with the database. This type of class is called a data access object (DAO), or data access class.
+
+It is common to design DAOs behind an interface, meaning that we create an interface that describes what the DAO does, or what operations it supports, and a class that implements the interface to actually access the data. The rest of our application will then refer to this interface (as opposed to referring to the implementation directly). This allows us to easily swap out the implementation of our DAOs.
+
+Here's an example of an interface to a DAO for Ad objects:
+
+      public interface Ads {
+         List<Ad> all(); // find all the ads records
+         Ad findOne(long id); // find an individual record by its id
+         void insert(Ad ad); // insert a new record
+         void update(Ad ad); // update an existing record
+         void destroy(Ad ad); // remove a record
+      }
+This interface defines how our application will manipulate Ad data, and the details of the implementation of these operations will not matter, since we will just be concerned with the interface. We will, of course, need to provide an implementation for this interface, but we won't refer to the implementation directly; the majority of the time we will refer to the interface.
+
+#### CRUD
+DAOs provide the interface to CRUD (create, read, update, destroy) operations for a given entity. Usually each method defined on a DAO maps to a CRUD operation for that resource, and the basic CRUD operations are a good starting place for methods to put on a DAO.
+
+### Factory
+Factory: a class for creating objects. We can use a factory to create instances of our DAOs for us, and to allow us to reuse an existing instance. The factory is also how the rest of our application can gain access to our DAOs.
+
+      public class DaoFactory {
+         private static Ads adsDao;
+         public static Ads getAdsDao() {
+            if (adsDao == null) {
+            adsDao = new MySQLAdsDao();
+            }
+            return adsDao;
+         }
+      }
+*** Here MySQLAdsDao is a class that implements the Ads interface.
+This class can be used by any other part of the application to gain access to the ads DAO object through the getAdsDao method. Notice that we only refer to the implementation of the Ads interface once here, when we create a new instance of it. The type of the value returned is Ads, the interface, meaning the only part of this code that knows about the implementation is the getAdsDao method.
+
+### SEE DAOExercise Repo !!!
