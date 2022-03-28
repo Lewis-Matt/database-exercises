@@ -499,3 +499,18 @@ A way to visually describe the schema of a database and the relationships betwee
 - [lucidchart](https://www.lucidchart.com)
 - [sqldbm](https://sqldbm.com)
 - Don't forget about good 'ol pencil and paper or a whiteboard!
+
+## What would be the best relationship and why?
+
+- in a dating app: users and user_profiles
+  - one-to-one: 1 user, 1 profile
+- in an online marketplace: orders and products
+  - one-to-many: 1 order, many products
+- in a blog application: users and posts
+  - one-to-many: 1 user, many posts
+- in a social media app: users and groups
+  - many-to-many: multiple users, multiple groups
+- in an app for professional networking: businesses and addresses
+  - one-to-one/one-to-many: small businesses will usually have one address, whereas a large business may have multiple offices
+- in a dog walking app: pet_records and pet_owners
+  - one-to-many: 1 pet owner, 'n' pet records (depending on number of pets)

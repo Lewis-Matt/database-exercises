@@ -98,9 +98,16 @@ In order to represent entities in our Java code, we will use beans. A JavaBean, 
 
 1. provides a zero-argument constructor
 2. has getters and setters for all instance variables
+   1. To access the JavaBean class, we should use getter and setter methods.
+   2. Using getters and setters has the advantage of letting you add code inside those methods, e.g. to create "virtual" properties which are calculated at runtime rather than stored in a field.
 3. implements the Serializable or Externalizable interface
    1. There are no methods to implement with these interfaces, they just are a programmatic way of saying that the class has a string representation (it can be serialized). ↩
 <hr>
+   
+Advantages:
+ 1. The JavaBean properties and methods can be exposed to another application.
+ 2. It provides an easiness to reuse the software components.
+
 You can think of a bean as a Java class that just represents data, meaning the class doesn't perform any complex logic or control flow, rather, it just serves as a way to group properties. Many Java libraries are built around beans, meaning we can leverage many existing libraries by writing our classes as beans. We will write any model classes (classes that represent our entities, which represent information from the database) as beans.
 
 Each model class corresponds to the structure of the underlying database table, and instances of the class represent rows from the underlying database table.
