@@ -39,6 +39,10 @@ Broadly speaking, we'll need to do these three things when creating a servlet:
     - Create a class the extends HttpServlet
     - Annotate the class with the @WebServlet annotation to specify which URL it maps to
     - Implement a protected doGet and/or doPost method that accepts two parameters: HttpServletRequest, and HttpServletResponse
+Creating new products (and in general, any operation that involves a user filling out a form) involves two separate HTTP requests:
+
+    GET -- Navigate to the page that shows the form for creating a new product
+    POST -- Fill out and submit the form
 
 An alternative to configuration with annotations is with a configuration file named web.xml. You may see examples of this on Stack Overflow or when searching for servlet related questions. At Codeup, we'll stick to annotation based configuration, as it is less verbose, and a little more modern.
 
