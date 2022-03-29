@@ -303,5 +303,5 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html
 
     - A function (f:equals) tests the equality of an attribute and the current item of a collection. (A built-in == operator is usually used to test equality.)
 
-
+    - The variable, inside of ${variable} in the JSP, comes from the controller (Servlet) when we are using MVC  
 
