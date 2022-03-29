@@ -106,3 +106,35 @@ Note that you will need to update your getRequestDispatcher calls to include /WE
     request.getRequestDispatcher("/secret-admin-page.jsp").forward(request, response);
     TO:
     request.getRequestDispatcher("/WEB-INF/secret-admin-page.jsp").forward(request, response);
+
+### !!! See ViewProfileServlet in the sessions-and-cookies-exercise branch of adlister!!!
+
+### Misc EL
+https://www.javatpoint.com/EL-expression-in-jsp
+
+1. sessionScope: Fetches attributes from session scope, set by session object
+
+index.jsp
+
+    <h3>welcome to index page</h3>  
+    <% session.setAttribute("user","sonoo"); %>
+    <a href="process.jsp">visit</a>  
+
+process.jsp
+
+    Value is ${ sessionScope.user }  
+
+2. cookie: It maps the given cookie name to the cookie value
+
+index.jsp
+
+    <h1>First JSP</h1>  
+    <%  
+    Cookie ck=new Cookie("name","abhishek");  
+    response.addCookie(ck);  
+    %>  
+    <a href="process.jsp">click</a>  
+
+process.jsp
+
+    Hello, ${cookie.name.value}  
