@@ -272,7 +272,7 @@ The c:forEach tag allows us to loop through most types of collections. The conte
 Syntax:
 
     <c:forEach items="${collection}" var="element"></c:forEach>
-We use the items attribute to specify the variable that contains the collection we are iterating over. The var attribute's value defines a variable that we can use inside the tag to refer to each item in the collection.
+We use the items attribute to specify the variable that contains the collection we are iterating over. The var attribute's value defines a variable that we can use inside the tag to refer to each item in the collection. With MVC, this collection will be defined in the Controller (Servlet).
 Example:
 
     <% request.setAttribute("numbers", new int[]{1, 2, 3, 4, 5, 6, 7}); %>
