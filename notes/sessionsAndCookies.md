@@ -1,7 +1,13 @@
 # Sessions and Cookies
 Cookies are a way for web applications to track state. Cookies are the reason why you can log in to a website, and stay logged in even if you close and re-open your browser.
 
-More specifically, a cookie is a name / value pair stored in a browser. When a browser requests a website from a server, the server can give the browser a unique value that the browser will then send to the server with every subsequent request1. The server can then use this unique value to identify specific users and keep track of various pieces of information, such as whether the user has successfully logged in.
+More specifically, a cookie is a name / value pair stored in a browser. When a browser requests a website from a server, the server can give the browser a unique value that the browser will then send to the server with every subsequent request. 
+
+    This is done through HTTP headers, which, in short, are additional metadata that relate to HTTP requests and responses. 
+    When the first request comes to the server, the server will send a Set-Cookie header, which will cause the browser to store 
+    the sent value, and include a Cookie header with that value on any future requests to the same domain.
+
+The server can then use this unique value to identify specific users and keep track of various pieces of information, such as whether the user has successfully logged in.
 
 Sessions are the server-side complement to cookies. While it is possible to store information directly in a cookie, often times the cookie just serves as an identifier for session data on the server. You can think of a cookies and sessions as key-value pairs, the cookie serving as the key (used to find the session data), and the session as the value(s) (any information we want to track from our individual users).
 
