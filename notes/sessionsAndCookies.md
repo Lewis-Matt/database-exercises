@@ -3,7 +3,7 @@ Cookies are a way for web applications to track state. Cookies are the reason wh
 
 More specifically, a cookie is a name / value pair stored in a browser. When a browser requests a website from a server, the server can give the browser a unique value that the browser will then send to the server with every subsequent request1. The server can then use this unique value to identify specific users and keep track of various pieces of information, such as whether the user has successfully logged in.
 
-Sessions are the server-side complement to cookies. While it is possible to store information directly in a cookie, often times the cookie just serves as a identifier for session data on the server. You can think of a cookies and sessions as key-value pairs, the cookie serving as the key (used to find the session data), and the session as the value(s) (any information we want to track from our individual users).
+Sessions are the server-side complement to cookies. While it is possible to store information directly in a cookie, often times the cookie just serves as an identifier for session data on the server. You can think of a cookies and sessions as key-value pairs, the cookie serving as the key (used to find the session data), and the session as the value(s) (any information we want to track from our individual users).
 
 ## Session Tracking
 Java servlets automatically use cookies to track and store a session ID in each browser. By default, this session will be destroyed when the browser is closed. You can also create and send your own cookies, and use them to access user-specific data stored in memory, a file, or a database, but for this course, we will just be using the built-in functionality.
@@ -53,7 +53,7 @@ Destroy the entire session
 Both the request object and the session object have getAttribute and setAttribute methods, and you will be using both. It is important not to confuse the two. In general, the request object (and any attributes you set on it) is only available for one HTTP request, but the session object persists for much longer (until the user closes the browser or the server is restarted).
 
 ## Restricting Public Access to JSPs
-We can store information in our sessions and use that to restrict access to different parts of our application. For example, imagine we have a web application with an admin dashboard that should only be available to admin users. When a user logs in, we can store information about whether or not the user is an admin in the session.
+We can store information in our sessions and use that to restrict access to different parts of our application. For example, imagine we have a web application with an admin dashboard that should only be available to admin users. When a user logs in, we can store information about whether the user is an admin in the session.
 
 Inside of LoginServlet.java:
 
