@@ -98,6 +98,9 @@ This is not ideal for JSP files, however. If a user visits /login.jsp, the JSP f
 
 To protect against this, we can create a directory named `WEB-INF` inside webapp. Anything we put in the WEB-INF directory will not be accessible outside our application. This means that if we put our JSP files inside the WEB-INF directory, we can only allow access them through one of our servlets.
 
+    // Note: sendRedirect sends the redirect to the page (url). Has nothing to do with the path to the file in WEB-INF.
+
+
 Note that you will need to update your getRequestDispatcher calls to include /WEB-INF/ when defining the path to your JSP file. In our example, we would need to modify ShowAdminDashboardServlet.java from:
 
     request.getRequestDispatcher("/secret-admin-page.jsp").forward(request, response);
