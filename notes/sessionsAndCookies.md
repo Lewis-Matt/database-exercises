@@ -6,6 +6,7 @@ More specifically, a cookie is a name / value pair stored in a browser. When a b
 Sessions are the server-side complement to cookies. While it is possible to store information directly in a cookie, often times the cookie just serves as an identifier for session data on the server. You can think of a cookies and sessions as key-value pairs, the cookie serving as the key (used to find the session data), and the session as the value(s) (any information we want to track from our individual users).
 
 ## Session Tracking
+<hr>
 Java servlets automatically use cookies to track and store a session ID in each browser. By default, this session will be destroyed when the browser is closed. You can also create and send your own cookies, and use them to access user-specific data stored in memory, a file, or a database, but for this course, we will just be using the built-in functionality.
 
 The servlet libraries define a class named `HttpSession`, instances of which represent a session. We have access to this session object through the request object's `getSession` method, and from there, we can define and retrieve attributes on the session with the `setAttribute` and `getAttribute` methods. The attributes that we set in the session are completely up to us, the only restriction is that we must use the same names to retrieve items as we use to set them.
@@ -13,11 +14,11 @@ The servlet libraries define a class named `HttpSession`, instances of which rep
 ### Session Methods
 
         Method 	                                    Description
-        `request.getSession()`                      Obtain the current session object
-        `session.getAttribute("attributeName")`     Retrieve a value from the session
-        `session.setAttribute("name", value)`       Set/store a value in the session
-        `session.removeAttribute("name")`           Remove an attribute from the session
-        `session.invalidate()`                      Destroy and regenerate the entire session
+        request.getSession()                      Obtain the current session object
+        session.getAttribute("attributeName")     Retrieve a value from the session
+        session.setAttribute("name", value)       Set/store a value in the session
+        session.removeAttribute("name")           Remove an attribute from the session
+        session.invalidate()                      Destroy and regenerate the entire session
 
 #### Examples:
 Inside a servlet
@@ -49,10 +50,14 @@ Destroy the entire session
 
 `request.getSession().invalidate();`
 
+<hr>
+
 ### Requests vs Sessions
 Both the request object and the session object have getAttribute and setAttribute methods, and you will be using both. It is important not to confuse the two. In general, the request object (and any attributes you set on it) is only available for one HTTP request, but the session object persists for much longer (until the user closes the browser or the server is restarted).
+<hr>
 
 ## Restricting Public Access to JSPs
+<hr>
 We can store information in our sessions and use that to restrict access to different parts of our application. For example, imagine we have a web application with an admin dashboard that should only be available to admin users. When a user logs in, we can store information about whether the user is an admin in the session.
 
 Inside of LoginServlet.java:
