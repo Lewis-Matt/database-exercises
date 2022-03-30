@@ -141,4 +141,27 @@ For these examples, we are working with a database named codeup_test_db that con
 ## Protecting the Configuration
 In the examples, we had hardcoded username and password, which is bad. We can create a configuration file that has our sensitive information in it and add it to  The simplest approach, and the one we will use, is to create a class that holds our config information and not track that class file with Git.
 
+    class Config {
+        public String getUrl() {
+            return "jdbc:mysql://localhost:3306/codeup_test_db?allowPublicKeyRetrieval=true&useSSL=false";
+        }
+        public String getUser() {
+            return "root";
+        }
+        public String getPassword() {
+            return "codeup";
+        }
+    }
+Replace any hardcoded usernames, passwords, or URLs with references to this config class:
+
+    // ...
+    Config config = new Config();
+    Connection connection = DriverManager.getConnection(
+        config.getUrl(),
+        config.getUser(),
+        config.getPassword()
+    );
+    // ...
+
+
 
