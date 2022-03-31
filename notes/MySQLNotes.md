@@ -637,3 +637,28 @@ The following example uses a subquery to get the primary key for the roles table
 <hr>
 SQL beginners often use subqueries when the same results can be achieved with JOINs. While subqueries may be easier to understand and use for many SQL users, JOINs are often more efficient and faster. JOINs are also easier to read as the queries become more complex.
 <hr>
+
+
+## IntelliJ Setup
+
+
+1. Open the database tool window 
+   1. View -> Tool Windows -> Database
+2. Add a new connection 
+   1. Click on the '+' and choose Data Source -> MySQL
+   2. Some versions of IntelliJ might require to specify the server version while you choose a driver, in your case could be something like: MySQL 8.x.x
+3. Fill in the following:
+   1. Host: localhost 
+   2. Port: 3306 
+   3. Database:
+   4. User: root 
+   5. Password: codeup (or your root password)
+
+
+    No database selected
+    Note that you should leave the "Database" field blank so you can see them all.
+
+4. Under the Advanced tab, find the serverTimezone property and set it to UTC
+5. Click Test Connection and save if successful 
+6. You should be dropped into the db console 
+7. If you cannot run 'Test Connection', look for a prompt to update your drivers or analyze any exceptions found.
