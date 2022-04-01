@@ -113,3 +113,8 @@ We can make our example above safer like this:
         </h3>
     </c:forEach>
 The out tag will take care of any HTML that happens to be in whatever we are displaying, meaning that if the original content is <script>alert('xss')</script>, it will be transformed to &lt;script&gt;alert('xss')&lt;/script&gt; which will be safely displayed on the page and not executed as JavaScript.
+
+## Misc
+- See adlister user-input-exercise branch
+- Note the MVC structure in that branch (M: Ad, User) (V: JSPs) (C: Servlets) and then DAO for db access
+- For the jdbc-exercise 501 error (when viewing ads) deleting the 'target' directory solved it - mysql version issue persisting?
