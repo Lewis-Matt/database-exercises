@@ -177,4 +177,5 @@ Factory: a class for creating objects. We can use a factory to create instances 
 *** Here MySQLAdsDao is a class that implements the Ads interface.
 This class can be used by any other part of the application to gain access to the ads DAO object through the getAdsDao method. Notice that we only refer to the implementation of the Ads interface once here, when we create a new instance of it. The type of the value returned is Ads, the interface, meaning the only part of this code that knows about the implementation is the getAdsDao method.
 
-### SEE DAOExercise Repo !!!
+### See DAOExercise Repo !!!
+### See MySQLAdsDAO in the jdbc-exercise branch of the Adlister repo
