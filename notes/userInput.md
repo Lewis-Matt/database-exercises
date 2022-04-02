@@ -24,7 +24,7 @@ If a user searches for something like "watch", our SQL would look like this:
 But what happens if a user searches for "apple's watch"? (note the single quote):
 
     SELECT * FROM products WHERE name LIKE '%apple's watch%';
-This is a SQL syntax error and will most likely cause our application to error out! This is called a SQL injection vulnerability and it occurs when we use user input directly in our database queries.
+This is a SQL syntax error and will most likely cause our application to error out! This is called a SQL injection vulnerability, and it occurs when we use user input directly in our database queries.
 
 ### Preventing SQL Injection with Prepared Statements
 A prepared statement is similar to the regular statement object we previously covered, with one key difference: it uses placeholders for potentially dangerous values (i.e. value that come from the user).
@@ -44,7 +44,7 @@ We could fix the SQL injection vulnerability from the previous example by using 
         // do something with the search results
     }
 - We define the SQL ahead of time and the query is passed to the prepareStatement method, as opposed to being passed to executeQuery.
-- We defined the query with a placeholder, a ? to indicate where the value will go.
+- We defined the query with a placeholder, a '?' to indicate where the value will go.
 - We used the setString method to safely insert the search term into the query. There are other methods that start with .set for the other SQL data types.
 
   
