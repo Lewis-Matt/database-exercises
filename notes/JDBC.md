@@ -12,6 +12,7 @@ The JDBC library includes APIs for each of the tasks mentioned below that are co
 A database driver is a program that translates between Java and the database server. Database drivers are specific to a DBMS, meaning you would need a different database driver to talk to MySQL than you would to talk to Microsoft SQL Server.
 
 Maven Dependency for MySQL:
+- Delete the 'target' directory after changing dependencies
 
     <dependency>
         <groupId>mysql</groupId>

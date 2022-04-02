@@ -117,4 +117,4 @@ The out tag will take care of any HTML that happens to be in whatever we are dis
 ## Misc
 - See adlister user-input-exercise branch
 - Note the MVC structure in that branch (M: Ad, User) (V: JSPs) (C: Servlets) and then DAO for db access
-- For the jdbc-exercise 501 error (when viewing ads) deleting the 'target' directory solved it - mysql version issue persisting?
+- For the jdbc-exercise 501 error (when viewing ads) deleting the 'target' directory solved after updating  mysql dependency in pom fixed it.
