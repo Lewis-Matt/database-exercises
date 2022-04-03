@@ -86,7 +86,7 @@ https://www.tutorialspoint.com/jsp/jsp_form_processing.htm
 The M in MVC says that the data an application handles and its representation should also be a separate concern. We will use beans to represent the entities in our application. 
 
     An entity is a singular, identifiable object within the problem space our application is operating in. 
-Usually each entity is represented by a database table. If we were building a web application that interacted with the employees database we explored in the previous module, we might have the following entities:
+Usually each entity is represented by a database table. If we were building a web application that interacted with the employees' database we explored in the previous module, we might have the following entities:
 
     Department
     Employee
@@ -102,7 +102,16 @@ In order to represent entities in our Java code, we will use beans. A JavaBean, 
    1. To access the JavaBean class, we should use getter and setter methods.
    2. Using getters and setters has the advantage of letting you add code inside those methods, e.g. to create "virtual" properties which are calculated at runtime rather than stored in a field.
 3. implements the Serializable or Externalizable interface
-   1. There are no methods to implement with these interfaces, they just are a programmatic way of saying that the class has a string representation (it can be serialized). ↩
+   1. There are no methods to implement with these interfaces, they just are a programmatic way of saying that the class has a string representation (it can be serialized).
+
+<hr>
+
+##### More on Serialization
+Java provides a mechanism, called object serialization where an object can be represented as a sequence of bytes that includes the object's data as well as information about the object's type and the types of data stored in the object.
+
+After a serialized object has been written into a file, it can be read from the file and deserialized that is, the type information and bytes that represent the object and its data can be used to recreate the object in memory.
+
+Most impressive is that the entire process is JVM independent, meaning an object can be serialized on one platform and deserialized on an entirely different platform.
 <hr>
    
 Advantages:
