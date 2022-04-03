@@ -30,6 +30,8 @@ Maven Dependency for MySQL:
 
 Most methods on the objects we will be working with can throw a `SQLException;` our code will need to handle these exceptions.
 
+Note that, in a try-catch, if you have a return statement in the 'try' block, you cannot just use `printStackTrace()` in the catch block. The problem is the exception isn't really handled properly nor is it allowed to escape. It won't stop the thread execution and will continue after the try block as in normal condition (thus requiring a return). You need to either try to recover from the exception (in the case that it is recoverable), or throw RuntimeException.
+
 ### Connecting to a Database
 Use the static `getConnection` method of the `DriverManager` class to return a `Connection` object, which, as the name implies, is an object that represents a database connection.
 
