@@ -30,7 +30,7 @@ Let's take a look at what happens when we hash a password:
     String hash = BCrypt.hashpw(password, BCrypt.gensalt());
     System.out.println(hash);
     // Output: $2a$10$TbjLzPRB1MBIQAQbFsmANOumLP0oOEU1b.MvZFkeqIG0D8RqzFbIq
-Here we use the hashpw method of the BCrypt class to generate our hashed password, then print it out. Salt was also added, so if we were to compute the hash of the original password twice, the results would be different (w/o salt, the hash would be the same).
+Here we use the `hashpw` method of the BCrypt class to generate our hashed password, then print it out. Salt was also added, so if we were to compute the hash of the original password twice, the results would be different (w/o salt, the hash would be the same).
 
 - Within your web application, when a user signs up, your application will have access to their plain text password. You should make sure that you don't store this plain text value in your database. Instead, you should hash the password, and store the hash in your database.
 
@@ -46,9 +46,9 @@ We can check to see if a given plaintext string matches a known hash like so:
     passwordsMatch = BCrypt.checkpw("password123", hash);
     System.out.println(passwordsMatch); // true
 
-Here we use the checkpw method of the BCrypt class to check if a plaintext password matches the calculated hash. If the first argument is the same as the original input that was used to create the hash, it will return true, otherwise it will return false.
+Here we use the `checkpw` method of the BCrypt class to check if a plaintext password matches the calculated hash. If the first argument is the same as the original input that was used to create the hash, it will return true, otherwise it will return false.
 
-- When a user logs in, you will check the value they entered into the login form (the plaintext password) against the value you have stored in your database (the hash). Based on the return value of the checkpw method, you can either log the user in, or send them back to the login page.
+- When a user logs in, you will check the value they entered into the login form (the plaintext password) against the value you have stored in your database (the hash). Based on the return value of the `checkpw` method, you can either log the user in, or send them back to the login page.
 
 ## Summary
         Method 	                                            Description
