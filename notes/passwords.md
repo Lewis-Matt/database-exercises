@@ -34,6 +34,9 @@ Here we use the `hashpw` method of the BCrypt class to generate our hashed passw
 
 - Within your web application, when a user signs up, your application will have access to their plain text password. You should make sure that you don't store this plain text value in your database. Instead, you should hash the password, and store the hash in your database.
 
+#### Salt Rounds (Adlister)
+With "salt round" they actually mean the cost factor. The cost factor controls how much time is needed to calculate a single BCrypt hash. The higher the cost factor, the more hashing rounds are done. Increasing the cost factor by 1 doubles the necessary time. The more time is necessary, the more difficult is brute-forcing.
+
 ### Verifying Hashes
 We can check to see if a given plaintext string matches a known hash like so:
 
